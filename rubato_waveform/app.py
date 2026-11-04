@@ -353,7 +353,11 @@ _FONT_JS = ("window.__smokeFont = 'pending';"
             "function () { window.__smokeFont = 'error'; }); 0")
 
 
-_SMOKE_DROP_JS = ("var dt = new DataTransfer(); dt.items.add(new File(['x'], 'smoke.wav'));"
+# WebView2 refuses a scripted File ("not a file on the disk"), so the call that hands over a real file's
+# path is stubbed there. Everything after it still runs: the page listener, the bridge and the callback.
+_SMOKE_DROP_JS = ("if (window.chrome && window.chrome.webview) {"
+                  " window.chrome.webview.postMessageWithAdditionalObjects = function () {}; }"
+                  " var dt = new DataTransfer(); dt.items.add(new File(['x'], 'smoke.wav'));"
                   " document.dispatchEvent(new DragEvent('drop', {dataTransfer: dt, bubbles: true, cancelable: true})); 0")
 
 

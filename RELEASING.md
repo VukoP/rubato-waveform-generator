@@ -103,8 +103,8 @@ A release must be published before the website's download links work, because th
 Until CI has run on GitHub, these are unverified:
 
 - The `ci.yml` jobs on the hosted runners (lint, tests on Linux, macOS and Windows, UI tests on Linux).
-- The Windows build: `packaging/build_windows.ps1` and its smoke test have never run on a Windows machine.
 - The Windows zip itself: the author has not run the app on Windows.
+- A real file drag on Windows. The smoke test cannot script one, and WebView2 refuses a scripted file, so the step that hands over the real path is stubbed there.
 - The exact wording of the SmartScreen steps in the README.
 - The README CI badge, which stays grey until `ci.yml` has run on `main`.
 - Golden frame hashes. They are skipped in CI (the `CI` variable is set), because the hosted runner's libm or Python build may differ from the author's Mac. Run the full suite on the author's Mac before tagging, since CI only checks the constant records and behaviour.
