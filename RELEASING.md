@@ -39,6 +39,17 @@ Then set the repository rules the workflows cannot enforce. Do this before the f
 gh api -X PUT repos/VukoP/rubato-waveform-generator/actions/permissions/fork-pr-contributor-approval -f approval_policy=all_external_contributors
 gh api -X PUT repos/VukoP/rubato-waveform-generator/actions/permissions/workflow -f default_workflow_permissions=read -F can_approve_pull_request_reviews=false
 
+# Only GitHub-owned actions may run.
+gh api -X PUT repos/VukoP/rubato-waveform-generator/actions/permissions -F enabled=true -f allowed_actions=selected
+gh api -X PUT repos/VukoP/rubato-waveform-generator/actions/permissions/selected-actions -F github_owned_allowed=true -F verified_allowed=false
+
+# Dependabot alerts and security updates. Secret scanning and push protection are already on for a public repository.
+gh api -X PUT repos/VukoP/rubato-waveform-generator/vulnerability-alerts
+gh api -X PUT repos/VukoP/rubato-waveform-generator/automated-security-fixes
+
+# No unused surfaces.
+gh repo edit --enable-wiki=false --enable-projects=false
+
 # Protect main: pull requests with green CI, no force pushes.
 gh api -X PUT repos/VukoP/rubato-waveform-generator/branches/main/protection --input - <<'JSON'
 {"required_status_checks": {"strict": true, "contexts": ["lint", "test (ubuntu-latest, py3.12)", "test (ubuntu-latest, py3.14)", "test (macos-latest, py3.14)", "test (windows-latest, py3.13)", "ui"]},
