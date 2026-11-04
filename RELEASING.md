@@ -48,7 +48,7 @@ gh api -X PUT repos/VukoP/rubato-waveform-generator/vulnerability-alerts
 gh api -X PUT repos/VukoP/rubato-waveform-generator/automated-security-fixes
 
 # No unused surfaces.
-gh repo edit --enable-wiki=false --enable-projects=false
+gh api -X PATCH repos/VukoP/rubato-waveform-generator -F has_wiki=false -F has_projects=false
 
 # Protect main: pull requests with green CI, no force pushes.
 gh api -X PUT repos/VukoP/rubato-waveform-generator/branches/main/protection --input - <<'JSON'
