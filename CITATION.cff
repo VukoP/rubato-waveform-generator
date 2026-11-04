@@ -1,0 +1,23 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it using the metadata in this file."
+title: "Rubato Waveform Generator"
+type: software
+authors:
+  - alias: VukoP
+repository-code: "https://github.com/VukoP/rubato-waveform-generator"
+url: "https://vukop.github.io/rubato-waveform-generator/"
+license: Apache-2.0
+version: 1.0.0
+date-released: "2026-11-04"
+abstract: "Free, open-source desktop app that turns audio into an animated, audio-reactive waveform video with a transparent background (ProRes 4444 with alpha) for video editors."
+keywords:
+  - audio waveform
+  - waveform generator
+  - audio visualizer
+  - audio-reactive
+  - transparent video
+  - alpha channel
+  - ProRes 4444
+  - podcast
+  - video editing
+  - DaVinci Resolve

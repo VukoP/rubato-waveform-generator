@@ -1,0 +1,65 @@
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "rubato-waveform-generator"
+dynamic = ["version"]
+description = "Audio-reactive waveform generator that exports transparent ProRes 4444 MOV video."
+readme = "README.md"
+requires-python = ">=3.12"
+license = "Apache-2.0"
+license-files = ["LICENSE", "NOTICE"]
+authors = [{name = "VukoP"}]
+keywords = [
+    "waveform", "audio visualizer", "audio-reactive", "audio visualization",
+    "transparent video", "alpha channel", "ProRes 4444", "MOV", "video overlay",
+    "podcast", "video editing", "DaVinci Resolve",
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: End Users/Desktop",
+    "Operating System :: MacOS",
+    "Operating System :: Microsoft :: Windows",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
+    "Topic :: Multimedia :: Sound/Audio :: Analysis",
+    "Topic :: Multimedia :: Video",
+]
+dependencies = [
+    "pillow>=13,<14",
+    "numpy>=2",
+]
+
+[project.scripts]
+rubato-waveform = "rubato_waveform.cli:main"
+
+[project.gui-scripts]
+rubato-waveform-app = "rubato_waveform.app:main"
+
+[project.optional-dependencies]
+gui = ["pywebview>=6.2,<6.3"]
+
+[project.urls]
+Homepage = "https://github.com/VukoP/rubato-waveform-generator"
+Repository = "https://github.com/VukoP/rubato-waveform-generator"
+Issues = "https://github.com/VukoP/rubato-waveform-generator/issues"
+Changelog = "https://github.com/VukoP/rubato-waveform-generator/blob/main/CHANGELOG.md"
+
+[tool.setuptools.dynamic]
+version = {attr = "rubato_waveform.__version__"}
+
+[tool.setuptools.packages.find]
+include = ["rubato_waveform*"]
+
+[tool.setuptools.package-data]
+rubato_waveform = ["ui/**"]
+
+[tool.ruff]
+line-length = 110
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+markers = ["ui: browser-driven UI tests (Playwright)"]

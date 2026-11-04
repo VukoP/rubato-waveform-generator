@@ -1,0 +1,18 @@
+Rubato Waveform Generator
+Copyright 2026 VukoP
+
+Licensed under the Apache License, Version 2.0. See the LICENSE file.
+
+The Rubato and Rubato Studio names and the Rubato logos are not licensed under
+the Apache License. See section 6 of the License, which grants no permission to
+use trade names or marks except to describe the origin of the work and to
+reproduce this NOTICE file.
+
+The logo files are assets/brand/, rubato_waveform/ui/brand/,
+docs/assets/favicon.* and docs/assets/social-preview.png. Forks must replace
+them and must not use the name to identify their product, except as needed to
+describe the origin of the work and to reproduce this NOTICE file.
+
+The code that generates the logo files, scripts/make_brand.py, is licensed
+under the Apache License like the rest of the code. What is reserved is the
+logo files it produces and the name, not the script.

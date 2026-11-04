@@ -1,0 +1,228 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Rubato Waveform Generator: transparent audio waveform video</title>
+  <meta name="description" content="Free, open-source desktop app that turns audio into an animated waveform video with a transparent background. ProRes 4444 with alpha, rendered locally.">
+  <link rel="canonical" href="https://vukop.github.io/rubato-waveform-generator/">
+  <meta name="theme-color" content="#111114">
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+  <link rel="icon" type="image/png" href="assets/favicon.png">
+  <link rel="preload" href="assets/fonts/InstrumentSans-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="assets/site.css">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Rubato Waveform Generator">
+  <meta property="og:title" content="Rubato Waveform Generator: transparent audio waveform video">
+  <meta property="og:description" content="Free, open-source desktop app that turns audio into an animated waveform video with a transparent background. ProRes 4444 with alpha, rendered locally.">
+  <meta property="og:url" content="https://vukop.github.io/rubato-waveform-generator/">
+  <meta property="og:image" content="https://vukop.github.io/rubato-waveform-generator/assets/social-preview.png">
+  <meta property="og:image:width" content="1280">
+  <meta property="og:image:height" content="640">
+  <meta property="og:image:alt" content="Rubato Waveform Generator logo beside an audio waveform on a dark background">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Rubato Waveform Generator: transparent audio waveform video">
+  <meta name="twitter:description" content="Free, open-source desktop app that turns audio into an animated waveform video with a transparent background. ProRes 4444 with alpha, rendered locally.">
+  <meta name="twitter:image" content="https://vukop.github.io/rubato-waveform-generator/assets/social-preview.png">
+  <meta name="twitter:image:alt" content="Rubato Waveform Generator logo beside an audio waveform on a dark background">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "Rubato Waveform Generator",
+    "description": "Free, open-source desktop app that turns an audio file into an animated, audio-reactive waveform video with a transparent background: ProRes 4444 with alpha in a MOV.",
+    "applicationCategory": "MultimediaApplication",
+    "operatingSystem": "macOS 14 or newer (Apple Silicon), Windows 10/11 x64, Linux (from source)",
+    "softwareVersion": "1.0.0",
+    "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"},
+    "license": "https://www.apache.org/licenses/LICENSE-2.0",
+    "author": {"@type": "Person", "name": "VukoP", "url": "https://github.com/VukoP"},
+    "url": "https://vukop.github.io/rubato-waveform-generator/",
+    "downloadUrl": "https://github.com/VukoP/rubato-waveform-generator/releases/latest",
+    "image": "https://vukop.github.io/rubato-waveform-generator/assets/social-preview.png"
+  }
+  </script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap">
+      <a class="brand" href="./"><img src="assets/favicon.svg" width="24" height="24" alt="">Rubato Waveform Generator</a>
+      <nav class="nav" aria-label="Primary">
+        <a href="#layouts">Layouts</a>
+        <a href="#faq">FAQ</a>
+        <a href="https://github.com/VukoP/rubato-waveform-generator">GitHub</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="wrap">
+        <p class="eyebrow">Free and open source</p>
+        <h1>Audio waveforms as transparent video</h1>
+        <p class="lede">A free, open-source desktop audio waveform generator. Drop in an audio file, pick a layout, and export an animated, audio-reactive waveform as ProRes 4444 with real alpha, ready to place above your footage.</p>
+        <div class="actions">
+          <a class="btn primary" href="https://github.com/VukoP/rubato-waveform-generator/releases/latest">Download</a>
+          <a class="btn" href="https://github.com/VukoP/rubato-waveform-generator">View on GitHub</a>
+        </div>
+        <div class="hero-media">
+          <picture>
+            <source media="(prefers-reduced-motion: reduce)" srcset="media/app-main.png" width="2800" height="1800">
+            <img src="media/hero.webp" fetchpriority="high" width="1280" height="640" alt="An animated audio waveform drawn over a generated background, exported with a transparent background">
+          </picture>
+        </div>
+        <p class="hero-note">Hero clip: generated background and synthetic audio.</p>
+      </div>
+    </section>
+
+    <section id="features">
+      <div class="wrap">
+        <p class="eyebrow">What you get</p>
+        <h2>Built for one job: a clean overlay</h2>
+        <ul class="specs">
+          <li><strong>ProRes 4444 with real alpha</strong><span>A MOV with a transparent background, ready for a track above your footage.</span></li>
+          <li><strong>10 audio-reactive layouts</strong><span>Scroll, Center-out, Pulse, Flow, Ripple, Neon, Reflection, Peak hold, Orbit and Voice line, in 4 styles: Bars, Line, Area and Dots.</span></li>
+          <li><strong>18 color themes</strong><span>Solid or gradient fill, custom colors, and 3 presets: Calm, Balanced and Energetic.</span></li>
+          <li><strong>Real audio analysis</strong><span>The audio is analyzed every 5 ms. A 48-band spectrum from 45 Hz to 10 kHz drives Neon, Reflection, Peak hold and Voice line.</span></li>
+          <li><strong>Live preview</strong><span>Synchronized audio playback, scrubbing, drag and drop, and remembered settings. Export is cancelable and never damages an existing file.</span></li>
+          <li><strong>Fast on long audio</strong><span>A one-hour WAV was analyzed in about 6 seconds on an Apple Silicon Mac.</span></li>
+          <li><strong>Runs locally; no upload</strong><span>No account, no telemetry, no web requests of its own. Fonts are bundled.</span></li>
+          <li><strong>App and command line</strong><span>Use the desktop window or the <code>rubato-waveform</code> command, with custom width, height and frame rate.</span></li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="layouts">
+      <div class="wrap">
+        <p class="eyebrow">Layouts</p>
+        <h2>Ten layouts, one transparent background</h2>
+        <p class="lede">Each clip below is a real export from the app, driven by synthetic audio. The checkerboard shows the transparency.</p>
+        <ul class="gallery">
+        <li><figure class="tile">
+          <div class="stage"><img src="media/layouts/scroll.webp" width="540" height="90" loading="lazy" decoding="async" alt="Animated Scroll audio waveform: bars travel sideways across the strip as time passes"></div>
+          <figcaption>Scroll</figcaption>
+        </figure></li>
+        <li><figure class="tile">
+          <div class="stage"><img src="media/layouts/mirror.webp" width="540" height="90" loading="lazy" decoding="async" alt="Animated Center-out audio waveform: bars grow outward from the center"></div>
+          <figcaption>Center-out</figcaption>
+        </figure></li>
+        <li><figure class="tile">
+          <div class="stage"><img src="media/layouts/pulse.webp" width="540" height="90" loading="lazy" decoding="async" alt="Animated Pulse audio waveform: stationary bars pulse from the center"></div>
+          <figcaption>Pulse</figcaption>
+        </figure></li>
+        <li><figure class="tile">
+          <div class="stage"><img src="media/layouts/flow.webp" width="540" height="90" loading="lazy" decoding="async" alt="Animated Flow audio waveform: a scrolling waveform with a symmetric gradient"></div>
+          <figcaption>Flow</figcaption>
+        </figure></li>
+        <li><figure class="tile">
+          <div class="stage"><img src="media/layouts/ripple.webp" width="540" height="90" loading="lazy" decoding="async" alt="Animated Ripple audio waveform: stationary bars pulse as a wave spreading from the center"></div>
+          <figcaption>Ripple</figcaption>
+        </figure></li>
+        <li><figure class="tile">
+          <div class="stage"><img src="media/layouts/neon.webp" width="540" height="90" loading="lazy" decoding="async" alt="Animated Neon audio waveform: a glowing line oscillating around the center"></div>
+          <figcaption>Neon</figcaption>
+        </figure></li>
+        <li><figure class="tile">
+          <div class="stage"><img src="media/layouts/mirror-reflect.webp" width="540" height="90" loading="lazy" decoding="async" alt="Animated Reflection audio waveform: bars above a baseline with a mirrored reflection below"></div>
+          <figcaption>Reflection</figcaption>
+        </figure></li>
+        <li><figure class="tile">
+          <div class="stage"><img src="media/layouts/peakhold.webp" width="540" height="90" loading="lazy" decoding="async" alt="Animated Peak hold audio waveform: bars rising from the bottom with a falling peak cap"></div>
+          <figcaption>Peak hold</figcaption>
+        </figure></li>
+        <li class="orbit"><figure class="tile square">
+          <div class="stage sq"><img src="media/layouts/radial.webp" width="300" height="300" loading="lazy" decoding="async" alt="Animated Orbit audio waveform: spokes rotating around the center of a square frame"></div>
+          <figcaption>Orbit</figcaption>
+        </figure></li>
+        <li><figure class="tile">
+          <div class="stage"><img src="media/layouts/voiceline.webp" width="540" height="90" loading="lazy" decoding="async" alt="Animated Voice line audio waveform: a thin, calm oscilloscope-like line"></div>
+          <figcaption>Voice line</figcaption>
+        </figure></li>
+        </ul>
+        <p class="hero-note">Export sizes: 1080×180, 1920×240, 3840×360 and 1080×1080 at 30 fps. Orbit needs a square frame, and the app switches to it automatically.</p>
+      </div>
+    </section>
+
+    <section id="app">
+      <div class="wrap">
+        <p class="eyebrow">The app</p>
+        <h2>Quiet interface, loud preview</h2>
+        <p class="lede">Controls for sensitivity, contrast, smoothing, time window, density, height and opacity sit beside a live preview.</p>
+        <div class="shot"><img src="media/app-main.png" width="2800" height="1800" loading="lazy" decoding="async" alt="The Rubato Waveform Generator window: layout and style controls on the left, a live waveform preview with playback in the main area"></div>
+      </div>
+    </section>
+
+    <section id="how">
+      <div class="wrap">
+        <p class="eyebrow">How it works</p>
+        <h2>Three steps</h2>
+        <ol class="steps">
+          <li><h3>Add audio</h3><p>Drop in WAV, MP3, M4A, FLAC and more, or the audio track of an MP4, MOV, MKV or WebM video.</p></li>
+          <li><h3>Shape the waveform</h3><p>Choose a layout, style, color theme and preset, then tune it against the live preview.</p></li>
+          <li><h3>Export a MOV</h3><p>Render ProRes 4444 with alpha and place the file on a track above your footage.</p></li>
+        </ol>
+      </div>
+    </section>
+
+    <section id="platforms">
+      <div class="wrap">
+        <p class="eyebrow">Platforms and editors</p>
+        <h2>What has been tested, and what has not</h2>
+        <h3 class="sub">Platforms</h3>
+        <div class="status">
+          <div class="row"><h4>macOS 14 or newer, Apple Silicon</h4><span class="tag ok">Tested by the author</span><p>Builds are ad-hoc signed and not notarized, so macOS refuses to open a downloaded copy at first. Try to open it, then go to System Settings &gt; Privacy &amp; Security &gt; Open Anyway.</p></div>
+          <div class="row"><h4>Windows 10/11 x64</h4><span class="tag warn">Built by CI, not yet tested</span><p>Unsigned, so SmartScreen may warn: More info &gt; Run anyway. Needs the WebView2 runtime, which is included in Windows 11.</p></div>
+          <div class="row"><h4>Linux</h4><span class="tag warn">From source only, not tested in a window</span><p>The command line and tests run in CI. The native window needs the GTK or Qt backend of pywebview; see its <a href="https://pywebview.flowrl.com/guide/installation.html">installation guide</a>.</p></div>
+        </div>
+        <h3 class="sub">Editors</h3>
+        <div class="status">
+          <div class="row"><h4>DaVinci Resolve</h4><span class="tag ok">Verified</span><p>It is the author's regular workflow.</p></div>
+          <div class="row"><h4>Premiere Pro, Final Cut Pro, After Effects and others</h4><span class="tag warn">Not tested by the author</span><p>These editors can generally read ProRes 4444 with alpha, so they are expected to work. Reports are welcome in the <a href="https://github.com/VukoP/rubato-waveform-generator/issues">issue tracker</a>.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="faq">
+      <div class="wrap">
+        <p class="eyebrow">FAQ</p>
+        <h2>Questions</h2>
+        <div class="faq">
+          <div>
+            <h3>How do I add an audio waveform to a video?</h3>
+            <p>Export the waveform from Rubato Waveform Generator as a MOV, then place that file on a track above your footage in your editor. Because the background is transparent, the video underneath shows through.</p>
+            <p>From a terminal: <code>rubato-waveform input.wav output.mov</code></p>
+          </div>
+          <div>
+            <h3>How do I make a waveform with a transparent background?</h3>
+            <p>Every export is ProRes 4444 with an alpha channel in a MOV, so transparency is the default. The alpha is premultiplied. If edges look wrong in your editor, make sure the clip's alpha is interpreted as premultiplied.</p>
+          </div>
+          <div>
+            <h3>Is it free?</h3>
+            <p>Yes. It is open source under the Apache-2.0 license, with no account and no paid tier.</p>
+          </div>
+          <div>
+            <h3>Does it upload my audio?</h3>
+            <p>No. Analysis, preview and export all run on your computer. There is no account, no telemetry, and the app makes no web requests on its own; the app's interface can only talk to its own local server.</p>
+          </div>
+          <div>
+            <h3>Why does it need FFmpeg?</h3>
+            <p>Exports are encoded with the <code>prores_ks</code> encoder from FFmpeg. FFmpeg is installed separately because it is not bundled, for licensing reasons. The app finds it automatically and shows install commands when it is missing.</p>
+            <p>macOS: <code>brew install ffmpeg</code><br>Windows: <code>winget install Gyan.FFmpeg</code><br>Debian or Ubuntu: <code>sudo apt install ffmpeg</code><br>Fedora: enable RPM Fusion, then <code>sudo dnf install ffmpeg</code> (stock <code>ffmpeg-free</code> may lack <code>prores_ks</code>)</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <p>Rubato Waveform Generator is licensed under <a href="https://www.apache.org/licenses/LICENSE-2.0">Apache-2.0</a>. The source is on <a href="https://github.com/VukoP/rubato-waveform-generator">GitHub</a>.</p>
+      <p>The Rubato and Rubato Studio names and logos are not licensed. Forks must not use them to identify their product.</p>
+      <p>The app is free. If it is useful to you, you can <a href="https://ko-fi.com/vukop">support it on Ko-fi</a>.</p>
+      <p>Made by the author of <a href="https://rubatostudio.com">Rubato Studio</a>.</p>
+      <p>Fonts: Instrument Sans and JetBrains Mono, under the SIL Open Font License (<a href="assets/fonts/OFL-InstrumentSans.txt">Instrument Sans</a>, <a href="assets/fonts/OFL-JetBrainsMono.txt">JetBrains Mono</a>).</p>
+      <p class="legal">Copyright 2026 VukoP</p>
+    </div>
+  </footer>
+</body>
+</html>

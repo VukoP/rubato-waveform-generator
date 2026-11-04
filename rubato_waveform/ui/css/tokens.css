@@ -1,0 +1,58 @@
+/*
+ * Design tokens.
+ * Principle: content is loud, the interface is quiet. Neutral graphite
+ * surfaces; violet is reserved for what is live (selection, primary action,
+ * playback, focus); states use their own colours.
+ * Contrast (WCAG): white on --primary 4.9:1, --ink on --bg 16.1:1,
+ * --muted on --panel 6.9:1, --muted-2 on --panel 5.3:1.
+ */
+
+@font-face {
+  font-family: "Instrument Sans";
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+  src: url("../fonts/InstrumentSans-latin.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "JetBrains Mono";
+  font-style: normal;
+  font-weight: 100 800;
+  font-display: swap;
+  src: url("../fonts/JetBrainsMono-latin.woff2") format("woff2");
+}
+
+:root {
+  --bg: #111114;
+  --sidebar-bg: #141418;
+  --panel: #18181c;
+  --field: #141418;
+  --raised: #1f1f24;
+  --hover: #28282e;
+  --line: rgba(255, 255, 255, 0.07);
+  --line-2: rgba(255, 255, 255, 0.10);
+  --line-3: rgba(255, 255, 255, 0.16);
+  --violet: #8b6cf6;
+  --violet-soft: #a78bfa;
+  --violet-soft-2: #b8a6ff;
+  --violet-tint: rgba(139, 108, 246, 0.12);
+  --violet-border: rgba(139, 108, 246, 0.55);
+  --fuchsia: #d55ecf;
+  --amber: #f5a524;
+  --ok: #3ecf8e;
+  --danger: #f0647e;
+  --ink: #ededf0;
+  --muted: #a1a1aa;
+  --muted-2: #8b8b95;
+  --primary: #7455f0;
+  --ctl: 32px;
+  --r: 6px;
+  --r-row: 8px;
+  --r-lg: 12px;
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --font: -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, "Segoe UI", sans-serif;
+  --font-display: "Instrument Sans", -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  /* Vendored font first on purpose: timecode looks the same on every OS. */
+  --mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
+}

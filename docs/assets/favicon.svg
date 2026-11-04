@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+<mask id="gap"><rect width="64" height="64" fill="#fff"/><path d="M-4 32H2C6 32 8 25 15 25C22 25 20 40 27 40C34 40 32 22 39 22C46 22 44 38 51 38C58 38 58 32 62 32H68" fill="none" stroke="#000" stroke-width="7"/></mask>
+<g mask="url(#gap)">
+<path d="M2 32C6 32 8 25 15 25C22 25 20 40 27 40C34 40 32 22 39 22C46 22 44 38 51 38C58 38 58 32 62 32A30 30 0 0 0 2 32Z" fill="#a78bfa"/>
+<path d="M2 32C6 32 8 25 15 25C22 25 20 40 27 40C34 40 32 22 39 22C46 22 44 38 51 38C58 38 58 32 62 32A30 30 0 0 1 2 32Z" fill="#7455f0"/>
+</g>
+</svg>

@@ -1,0 +1,137 @@
+# Copyright 2026 VukoP
+# SPDX-License-Identifier: Apache-2.0
+name: Release
+
+# Builds both desktop apps for a v* tag and prepares a DRAFT release. Nothing is published
+# automatically: the draft is reviewed and published by hand.
+on:
+  push:
+    tags: ["v*"]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+
+env:
+  PYTHONUTF8: "1"
+  PIP_DISABLE_PIP_VERSION_CHECK: "1"
+
+jobs:
+  # The full test suite must pass before anything is built or released.
+  ci:
+    uses: ./.github/workflows/ci.yml
+    permissions:
+      contents: read
+
+  verify-tag:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    outputs:
+      version: ${{ steps.check.outputs.version }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - id: check
+        env:
+          TAG: ${{ github.ref_name }}
+        run: |
+          version=$(sed -n 's/^__version__ = "\(.*\)"$/\1/p' rubato_waveform/__init__.py)
+          if [ -z "$version" ] || [ "v$version" != "$TAG" ]; then
+            echo "Tag '$TAG' does not match rubato_waveform.__version__ '$version'" >&2
+            exit 1
+          fi
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+
+  build-macos:
+    needs: [ci, verify-tag]
+    runs-on: macos-latest
+    timeout-minutes: 45
+    env:
+      VERSION: ${{ needs.verify-tag.outputs.version }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
+        with:
+          python-version: "3.14"
+          cache: pip
+          cache-dependency-path: requirements-dev.txt
+      - run: brew install ffmpeg
+      - run: python -m pip install -r requirements-dev.txt
+      - run: python -m pip install -e .
+      - run: bash packaging/build_macos.sh
+      - name: Smoke test the frozen app
+        run: |
+          rm -rf smoke && mkdir smoke
+          ditto -x -k "dist/Rubato-Waveform-Generator-$VERSION-macos-arm64.zip" smoke
+          app=$(find smoke -maxdepth 1 -name '*.app' | head -n 1)
+          exe_name=$(/usr/libexec/PlistBuddy -c 'Print :CFBundleExecutable' "$app/Contents/Info.plist")
+          "$app/Contents/MacOS/$exe_name" --smoke-test "$RUNNER_TEMP/smoke-macos.json"
+          cat "$RUNNER_TEMP/smoke-macos.json"
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: macos-arm64
+          path: dist/Rubato-Waveform-Generator-${{ env.VERSION }}-macos-arm64.zip
+          if-no-files-found: error
+
+  build-windows:
+    needs: [ci, verify-tag]
+    runs-on: windows-latest
+    timeout-minutes: 45
+    env:
+      VERSION: ${{ needs.verify-tag.outputs.version }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
+        with:
+          # 3.13 is the known-good combination with pythonnet on Windows.
+          python-version: "3.13"
+          cache: pip
+          cache-dependency-path: requirements-dev.txt
+      - run: choco install ffmpeg --yes --no-progress
+      - run: python -m pip install -r requirements-dev.txt
+      - run: python -m pip install -e .
+      - run: ./packaging/build_windows.ps1
+      - name: Smoke test the frozen app
+        run: |
+          Remove-Item -Recurse -Force smoke -ErrorAction SilentlyContinue
+          Expand-Archive -Path "dist/Rubato-Waveform-Generator-$env:VERSION-windows-x64.zip" -DestinationPath smoke
+          $exe = Get-ChildItem -Path smoke -Recurse -Filter "Rubato Waveform Generator.exe" | Select-Object -First 1
+          $out = Join-Path $env:RUNNER_TEMP "smoke-windows.json"
+          $proc = Start-Process -FilePath $exe.FullName -ArgumentList "--smoke-test", $out -PassThru -Wait
+          if (Test-Path $out) { Get-Content $out }
+          if ($proc.ExitCode -ne 0) { throw "smoke test exited with code $($proc.ExitCode)" }
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: windows-x64
+          path: dist/Rubato-Waveform-Generator-${{ env.VERSION }}-windows-x64.zip
+          if-no-files-found: error
+
+  publish:
+    needs: [verify-tag, build-macos, build-windows]
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: write
+    env:
+      TAG: ${{ github.ref_name }}
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        with:
+          path: release-artifacts
+          merge-multiple: true
+      - name: Create the draft release
+        run: |
+          python3 scripts/changelog_section.py "$TAG" > notes.md
+          gh release create "$TAG" release-artifacts/*.zip --draft --verify-tag --title "$TAG" --notes-file notes.md --repo "$GITHUB_REPOSITORY"

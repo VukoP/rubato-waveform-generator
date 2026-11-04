@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Rubato Waveform Generator</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="brand/favicon.png">
+<link rel="stylesheet" href="css/tokens.css">
+<link rel="stylesheet" href="css/app.css">
+<script type="module" src="js/main.js"></script>
+</head>
+<body>
+<svg class="sprite" width="0" height="0" aria-hidden="true" focusable="false">
+  <symbol id="i-check" viewBox="0 0 16 16"><path d="M3.5 8.5l3 3 6-7"/></symbol>
+  <symbol id="i-info" viewBox="0 0 16 16"><circle cx="8" cy="8" r="6.25"/><path d="M8 7.25v3.5M8 5.2v.01"/></symbol>
+  <symbol id="i-arrow" viewBox="0 0 16 16"><path d="M3 8h9.5M8.5 4l4 4-4 4"/></symbol>
+  <symbol id="i-play" viewBox="0 0 16 16"><path d="M5 3.4v9.2a.6.6 0 0 0 .9.5l7.3-4.6a.6.6 0 0 0 0-1L5.9 2.9a.6.6 0 0 0-.9.5z"/></symbol>
+  <symbol id="i-pause" viewBox="0 0 16 16"><rect x="4" y="3" width="2.8" height="10" rx="1"/><rect x="9.2" y="3" width="2.8" height="10" rx="1"/></symbol>
+  <symbol id="i-file" viewBox="0 0 16 16"><path d="M4 1.75h5l3.25 3.25v8.5a.75.75 0 0 1-.75.75h-7.5a.75.75 0 0 1-.75-.75v-11a.75.75 0 0 1 .75-.75z"/><path d="M9 1.75V5h3.25"/></symbol>
+</svg>
+
+<header class="app-head">
+  <div class="head-left">
+    <img class="brand-mark" src="brand/mark.svg" alt="" width="24" height="24">
+    <h1 class="brand-title">Rubato Waveform Generator</h1>
+  </div>
+  <ol class="steps" id="steps" aria-label="Progress">
+    <li class="step" data-step="0"><span class="dot"><span class="num">1</span><svg class="ic chk"><use href="#i-check"/></svg></span><span class="step-label">Audio</span><span class="sr-only step-done"></span></li>
+    <li class="step-bar" aria-hidden="true"></li>
+    <li class="step" data-step="1"><span class="dot"><span class="num">2</span><svg class="ic chk"><use href="#i-check"/></svg></span><span class="step-label">Analysis</span><span class="sr-only step-done"></span></li>
+    <li class="step-bar" aria-hidden="true"></li>
+    <li class="step" data-step="2"><span class="dot"><span class="num">3</span><svg class="ic chk"><use href="#i-check"/></svg></span><span class="step-label">Style</span><span class="sr-only step-done"></span></li>
+    <li class="step-bar" aria-hidden="true"></li>
+    <li class="step" data-step="3"><span class="dot"><span class="num">4</span><svg class="ic chk"><use href="#i-check"/></svg></span><span class="step-label">Export</span><span class="sr-only step-done"></span></li>
+  </ol>
+  <div class="head-right">
+    <button type="button" class="btn-icon" id="about-btn" aria-label="About" title="About"><svg class="ic"><use href="#i-info"/></svg></button>
+  </div>
+</header>
+
+<main class="app-main">
+  <div class="source" id="source" hidden>
+    <svg class="ic source-ic"><use href="#i-file"/></svg>
+    <span class="source-name" id="source-name"></span>
+    <span class="source-meta" id="source-meta"></span>
+    <button type="button" class="btn btn-quiet" id="change-btn">Change file</button>
+  </div>
+
+  <div class="stage" id="stage">
+    <canvas id="preview" width="1080" height="180" aria-label="Waveform preview"></canvas>
+    <div class="overlay" id="baseline" hidden></div>
+    <div class="overlay" id="playhead" hidden></div>
+    <div class="badge" id="badge"><span class="badge-dot"></span><span id="badge-text">Transparent</span></div>
+    <div class="size-label" id="size-label">1080 × 180 · 30 FPS</div>
+    <div class="empty" id="empty">
+      <div class="empty-frame" id="drop-prompt">
+        <img class="empty-mark" src="brand/mark.svg" alt="" width="48" height="48">
+        <h2 class="empty-title">Drop an audio file</h2>
+        <button type="button" class="btn btn-primary" id="choose-btn">Choose file</button>
+        <p class="empty-formats" id="empty-formats">WAV · MP3 · M4A · FLAC · AIFF · OGG · OPUS · and video files</p>
+      </div>
+      <div class="empty-frame" id="ffmpeg-panel" hidden>
+        <h2 class="panel-title">FFmpeg is required</h2>
+        <p class="panel-text" id="ffmpeg-text"></p>
+        <pre class="code" id="ffmpeg-cmd"></pre>
+        <p class="panel-alt" id="ffmpeg-alt"></p>
+        <div class="panel-actions">
+          <button type="button" class="btn btn-quiet" id="ffmpeg-copy">Copy</button>
+          <button type="button" class="btn btn-primary" id="ffmpeg-recheck">Check again</button>
+        </div>
+        <p class="panel-note" id="ffmpeg-note" role="status"></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="transport">
+    <div class="tp-capsule">
+      <button type="button" class="play" id="play-btn" aria-label="Play" disabled>
+        <svg class="ic ic-fill ic-play"><use href="#i-play"/></svg>
+        <svg class="ic ic-fill ic-pause"><use href="#i-pause"/></svg>
+      </button>
+      <span class="tc" id="time-now">00:00</span>
+      <input type="range" class="scrub" id="scrub" min="0" max="10000" step="1" value="0" aria-label="Position" disabled>
+      <span class="tc tc-total" id="time-total">00:00</span>
+    </div>
+  </div>
+</main>
+
+<aside class="inspector" id="inspector" aria-label="Settings">
+  <section class="sec" id="sec-signal">
+    <header class="sec-head"><h2>Signal</h2><p>How the wave reacts to sound</p></header>
+    <div class="sec-body" id="signal-body"></div>
+  </section>
+  <section class="sec" id="sec-form">
+    <header class="sec-head"><h2>Form</h2><p>Layout, style and geometry</p></header>
+    <div class="sec-body" id="form-body"></div>
+  </section>
+  <section class="sec" id="sec-color">
+    <header class="sec-head"><h2>Color</h2><p>Theme, gradient and custom colors</p></header>
+    <div class="sec-body" id="color-body"></div>
+  </section>
+</aside>
+
+<footer class="app-foot">
+  <div class="status-block">
+    <p class="status" id="status">Loading</p>
+    <p class="sr-only" id="announce" role="status"></p>
+    <div class="progress" id="progress" role="progressbar" aria-label="Operation progress" aria-valuemin="0" aria-valuemax="100"><span class="progress-bar" id="progress-bar"></span></div>
+  </div>
+  <div class="foot-right">
+    <div class="seg" id="formats" role="group" aria-label="Output size"></div>
+    <button type="button" class="btn btn-quiet" id="reveal-btn" hidden>Show in Finder</button>
+    <button type="button" class="btn btn-primary" id="export-btn" disabled><span>Export MOV</span><svg class="ic"><use href="#i-arrow"/></svg></button>
+    <button type="button" class="btn btn-quiet" id="cancel-btn" hidden>Cancel</button>
+  </div>
+</footer>
+
+<dialog id="about" aria-labelledby="about-title">
+  <div class="about-body">
+    <img class="about-mark" src="brand/mark.svg" alt="" width="48" height="48">
+    <h2 class="about-title" id="about-title">Rubato Waveform Generator</h2>
+    <p class="about-version" id="about-version"></p>
+    <p class="about-line">Copyright 2026 VukoP</p>
+    <p class="about-line">Apache License 2.0</p>
+    <p class="about-fine">The Rubato name and logo are not licensed for reuse.</p>
+    <p class="about-fine">Set in Instrument Sans and JetBrains Mono, both under the SIL Open Font License. FFmpeg is a separate install with its own license.</p>
+    <p class="about-fine"><a id="about-link" href="https://github.com/VukoP/rubato-waveform-generator" target="_blank" rel="noopener noreferrer">github.com/VukoP/rubato-waveform-generator</a></p>
+    <button type="button" class="btn btn-quiet" id="about-close" autofocus>Close</button>
+  </div>
+</dialog>
+</body>
+</html>
