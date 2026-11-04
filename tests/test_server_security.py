@@ -385,10 +385,24 @@ def read_to_eof(sock) -> bytes:
 
 def test_http09_request_is_refused_cleanly(srv):
     with socket.create_connection(("127.0.0.1", srv.port), timeout=10) as sock:
-        sock.sendall(b"GET /api/state\r\n")
+        sock.sendall(b"GET /api/state\r\n\r\n")     # the blank line: before 3.13 http.server reads headers here too
         reply = read_to_eof(sock)
     assert b"Internal error" not in reply and b"Bad request" in reply
     assert_alive(srv)
+
+
+def test_starting_the_server_never_asks_dns(tmp_path, monkeypatch):
+    """A reverse lookup of 127.0.0.1 can hold up the start by half a minute on a slow or broken network."""
+    def no_dns(*_args):
+        raise AssertionError("the server asked DNS for a name while starting")
+
+    monkeypatch.setattr(socket, "getfqdn", no_dns)
+    srv, session, _dialogs = make_server(tmp_path, monkeypatch)
+    try:
+        assert_alive(srv)
+    finally:
+        srv.stop()
+        session.shutdown()
 
 
 def test_duplicate_host_header_is_forbidden(srv):

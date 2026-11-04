@@ -21,6 +21,7 @@ import os
 import re
 import secrets
 import socket
+import socketserver
 import stat
 import sys
 import threading
@@ -151,7 +152,10 @@ class _Server(ThreadingHTTPServer):
         if sys.platform == "win32":
             # Without this, another local process can bind the same port and receive our requests.
             self.socket.setsockopt(socket.SOL_SOCKET, socket.SO_EXCLUSIVEADDRUSE, 1)
-        super().server_bind()
+        # Not HTTPServer.server_bind: it asks DNS for the name of 127.0.0.1, which nothing here needs
+        # and which can hold up the start by half a minute on a slow or broken network.
+        socketserver.TCPServer.server_bind(self)
+        self.server_name, self.server_port = self.server_address[:2]
 
     def process_request(self, request, client_address) -> None:
         if not self._slots.acquire(blocking=False):
