@@ -199,7 +199,7 @@ def test_a_native_drop_goes_through_pywebviews_own_dispatcher(session, dnd_state
     event = {"type": "drop", "dataTransfer": {"files": [
         {"name": wav.name, "pywebviewFullPath": "ignored"}]}}
     js_bridge_call(window, "pywebviewEventHandler", {"event": event, "nodeId": "document"}, "eventHandler")
-    assert wait_until(lambda: window.scripts)                # the refresh comes after the audio is selected
+    assert wait_until(lambda: app.REFRESH_JS in window.scripts)      # it comes after the audio is selected
     assert session.state()["audio"]["name"] == "dropped.wav" and dnd_state["paths"] == []
 
     session.shutdown()
