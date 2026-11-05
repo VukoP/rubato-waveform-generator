@@ -9,6 +9,12 @@ Rubato Waveform Generator is a free, open-source desktop audio waveform generato
 
 Podcasters, video editors and musicians often want a waveform that moves with the sound, sits on top of a video or a still image, and stays transparent. This app draws the real shape of your audio (peaks and loudness analyzed every 5 ms) and exports a clip with true alpha. Everything runs on your computer: no account, no upload, no telemetry.
 
+## Why this exists
+
+I wanted an animated waveform over a video in DaVinci Resolve. Building one inside Resolve is complicated, so I searched Google for an open-source repository that would do it, and I could not find one.
+
+So I made this app. It renders a ready-made MOV with a transparent background. You drop the file into your DaVinci Resolve project and place it on a track above your footage.
+
 ## Download and install
 
 You don't need Python or any programming tools to use the app. Install FFmpeg once, download the app and open it.
