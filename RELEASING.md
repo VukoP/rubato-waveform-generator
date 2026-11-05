@@ -111,3 +111,9 @@ Until CI has run on GitHub, these are unverified:
 - That the Pages site serves from `main:/docs`, and that the social preview was uploaded.
 
 Never attach a self-hosted runner to this public repository. A pull request from a fork can run code on it. A repository test fails if a workflow mentions `self-hosted`, and CI and release builds must stay on GitHub-hosted runners.
+
+## Search engines
+
+Crawlers only read `robots.txt` at the root of a host, so `docs/robots.txt` does not announce the sitemap for a project site. Submit the sitemap by hand in Google Search Console and Bing Webmaster Tools, using a URL-prefix property for `https://vukop.github.io/rubato-waveform-generator/`.
+
+To notify engines that use IndexNow after a site change, POST the site's URL to `https://api.indexnow.org/indexnow`, with the key from the `.txt` file in `docs/` named after that key and that file's URL as `keyLocation`.
