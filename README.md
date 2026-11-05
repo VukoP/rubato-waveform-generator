@@ -11,7 +11,7 @@ Podcasters, video editors and musicians often want a waveform that moves with th
 
 ## Why this exists
 
-I wanted an animated waveform over a video in DaVinci Resolve. Building one inside Resolve is complicated, so I searched Google for an open-source repository that would do it, and I could not find one.
+I wanted an animated waveform over a video in DaVinci Resolve, where building one is complicated.
 
 So I made this app. It renders a ready-made MOV with a transparent background. You drop the file into your DaVinci Resolve project and place it on a track above your footage.
 
